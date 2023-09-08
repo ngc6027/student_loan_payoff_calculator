@@ -6,7 +6,6 @@ import datetime
 
 debugFlag = False
 
-
 class studentLoanPayment:
     def __init__(self, amount, startMonth, startYear, endMonth, endYear):
         self.amount = amount
@@ -129,6 +128,68 @@ class studentLoan:
         printStr += f'\n\t\tStep 5 Payment: ${self.stepPayments[4].amount:,.2f}'
 
         return printStr
+
+
+class SLPGui():
+    def __init__(self):
+        self.window = None
+        self.label = None
+        self.entry = None
+        self.btn_add_loan = None
+        self.btn_remove_loan = None
+
+
+    def createStudentLoan(self):
+        self.entry.delete(0, tk.END)
+        self.entry.insert(0, "Add Loan Button has been pressed.")
+        print("Add Loan Button has been pressed.")
+
+
+    def removeStudentLoan(self):
+        self.entry.delete(0, tk.END)
+        self.entry.insert(0, "Remove Loan Button has been pressed.")
+        print("Remove Loan Button has been pressed.")
+
+
+    def createGui(self):
+        self.window = tk.Tk()
+
+        self.window.rowconfigure(0, minsize=50, weight=1)
+        self.window.columnconfigure([0, 1, 2], minsize=50, weight=1)
+
+        self.window.rowconfigure(1, minsize=50, weight=1)
+        self.window.columnconfigure([0, 1, 2], minsize=50, weight=1)
+
+        self.label = tk.Label(self.window, text="Loan 1:")
+        self.label.grid(row=0, column=0)
+
+        self.entry = tk.Entry(self.window, width=50)
+        self.entry.grid(row=0, column=1)
+
+        self.btn_add_loan = tk.Button(
+            text = "Add Loan",
+            width=8,
+            height=2,
+            bg="blue",
+            fg="yellow",
+            command=lambda:self.createStudentLoan(),
+        )
+
+        self.btn_add_loan.grid(row=0, column = 2)
+
+        self.btn_remove_loan = tk.Button(
+            text = "Remove Loan",
+            width=10,
+            height=2,
+            bg="blue",
+            fg="yellow",
+            command=lambda:self.removeStudentLoan(),
+        )
+
+        self.btn_remove_loan.grid(row=1, column=2)
+
+    def runGui(self):
+        self.window.mainloop()
 
 
 def createStudentLoansList ():
@@ -290,8 +351,9 @@ def main():
 
     print(f'\nTotal Interest: ${round(totalInterest, 2):,.2f}')
 
-    window = tk.Tk()
-    window.mainloop()
+    gui = SLPGui()
+    gui.createGui()
+    gui.runGui()
 
 
 if __name__ == "__main__":
