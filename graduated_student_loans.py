@@ -132,11 +132,7 @@ class studentLoan:
 
 class SLPGui():
     def __init__(self):
-        self.window = None
-        self.label = None
-        self.entry = None
-        self.btn_add_loan = None
-        self.btn_remove_loan = None
+        pass
 
 
     def createStudentLoan(self):
@@ -153,40 +149,101 @@ class SLPGui():
 
     def createGui(self):
         self.window = tk.Tk()
+        self.window.title("Graduated Student Loan Payoff Calculator")
 
         self.window.rowconfigure(0, minsize=50, weight=1)
-        self.window.columnconfigure([0, 1, 2], minsize=50, weight=1)
+        self.window.columnconfigure([0, 1, 2, 3, 4, 5, 6, 7, 8, 9], minsize=50, weight=1)
+
+        self.lbl_amount = tk.Label(self.window, text="Amount")
+        self.lbl_amount.grid(row=0, column=1)
+
+        self.lbl_interest_rate = tk.Label(self.window, text="Interest Rate")
+        self.lbl_interest_rate.grid(row=0, column=2)
+
+        self.lbl_autopay = tk.Label(self.window, text="Enrolled in AutoPay")
+        self.lbl_autopay.grid(row=0, column=3)
+
+        self.lbl_loan_provider_number = tk.Label(self.window, text="Loan Provider Number")
+        self.lbl_loan_provider_number.grid(row=0, column=1)
+
+        self.lbl_step1_payment = tk.Label(self.window, text="Step 1 Payment")
+        self.lbl_step1_payment.grid(row=0, column=4)
+
+        self.lbl_step2_payment = tk.Label(self.window, text="Step 2 Payment")
+        self.lbl_step2_payment.grid(row=0, column=5)
+
+        self.lbl_step3_payment = tk.Label(self.window, text="Step 3 Payment")
+        self.lbl_step3_payment.grid(row=0, column=6)
+
+        self.lbl_step4_payment = tk.Label(self.window, text="Step 4 Payment")
+        self.lbl_step4_payment.grid(row=0, column=7)
+
+        self.lbl_step5_payment = tk.Label(self.window, text="Step 5 Payment")
+        self.lbl_step5_payment.grid(row=0, column=8)
+
+        self.lbl_priority = tk.Label(self.window, text="Priority")
+        self.lbl_priority.grid(row=0, column=9)
 
         self.window.rowconfigure(1, minsize=50, weight=1)
-        self.window.columnconfigure([0, 1, 2], minsize=50, weight=1)
+        self.window.columnconfigure([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10], minsize=50, weight=1)
 
         self.label = tk.Label(self.window, text="Loan 1:")
-        self.label.grid(row=0, column=0)
+        self.label.grid(row=1, column=0)
 
-        self.entry = tk.Entry(self.window, width=50)
-        self.entry.grid(row=0, column=1)
+        self.ent_amount = tk.Entry(self.window, width=5)
+        self.ent_amount.grid(row=1, column=1)
+
+        self.ent_interest_rate = tk.Entry(self.window, width=5)
+        self.ent_interest_rate.grid(row=1, column=2)
+
+        self.ent_autopay = tk.Entry(self.window, width=5)
+        self.ent_autopay.grid(row=1, column=3)
+
+        self.ent_loan_provider_number = tk.Entry(self.window, width=5)
+        self.ent_loan_provider_number.grid(row=1, column=4)
+
+        self.ent_step1payment = tk.Entry(self.window, width=5)
+        self.ent_step1payment.grid(row=1, column=5)
+
+        self.ent_step2payment = tk.Entry(self.window, width=5)
+        self.ent_step2payment.grid(row=1, column=6)
+
+        self.ent_step3payment = tk.Entry(self.window, width=5)
+        self.ent_step3payment.grid(row=1, column=7)
+
+        self.ent_step4payment = tk.Entry(self.window, width=5)
+        self.ent_step4payment.grid(row=1, column=8)
+
+        self.ent_step5payment = tk.Entry(self.window, width=5)
+        self.ent_step5payment.grid(row=1, column=9)
+        
+        self.ent_priority = tk.Entry(self.window, width=5)
+        self.ent_priority.grid(row=1, column=1)
 
         self.btn_add_loan = tk.Button(
             text = "Add Loan",
             width=8,
-            height=2,
+            height=1,
             bg="blue",
             fg="yellow",
             command=lambda:self.createStudentLoan(),
         )
 
-        self.btn_add_loan.grid(row=0, column = 2)
+        self.btn_add_loan.grid(row=1, column=10)
 
         self.btn_remove_loan = tk.Button(
             text = "Remove Loan",
             width=10,
-            height=2,
+            height=1,
             bg="blue",
             fg="yellow",
             command=lambda:self.removeStudentLoan(),
         )
 
-        self.btn_remove_loan.grid(row=1, column=2)
+        self.window.rowconfigure(2, minsize=50, weight=1)
+        self.window.columnconfigure([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10], minsize=50, weight=1)
+
+        self.btn_remove_loan.grid(row=2, column=10)
 
     def runGui(self):
         self.window.mainloop()
