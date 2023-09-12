@@ -265,64 +265,64 @@ def createStudentLoansList ():
     payment3.setAmount(25.65)
     payment4.setAmount(33.76)
     payment5.setAmount(44.43)
-    # studentLoans.append(studentLoan(2436.58, 4.66, [payment1, payment2, payment3, payment4, payment5], 2, 2, False))
-    studentLoans.append(studentLoan(2436.58, 4.66, [payment1, payment2, payment3, payment4, payment5], 2, 2, True))
+    # studentLoans.append(studentLoan(2436.58, 4.66, [payment1, payment2, payment3, payment4, payment5], 3, 2, False))
+    studentLoans.append(studentLoan(2436.58, 4.66, [payment1, payment2, payment3, payment4, payment5], 3, 2, True))
 
     payment1.setAmount(27.00)
     payment2.setAmount(35.53)
     payment3.setAmount(46.76)
     payment4.setAmount(61.53)
     payment5.setAmount(80.97)
-    # studentLoans.append(studentLoan(4441.30, 4.66, [payment1, payment2, payment3, payment4, payment5], 3, 1, False))
-    studentLoans.append(studentLoan(4441.30, 4.66, [payment1, payment2, payment3, payment4, payment5], 3, 1, True))
+    # studentLoans.append(studentLoan(4441.30, 4.66, [payment1, payment2, payment3, payment4, payment5], 2, 1, False))
+    studentLoans.append(studentLoan(4441.30, 4.66, [payment1, payment2, payment3, payment4, payment5], 2, 1, True))
 
     payment1.setAmount(32.60)
     payment2.setAmount(42.90)
     payment3.setAmount(56.46)
     payment4.setAmount(74.31)
     payment5.setAmount(97.80)
-    # studentLoans.append(studentLoan(5426.37, 4.45, [payment1, payment2, payment3, payment4, payment5], 4, 7, False))
-    studentLoans.append(studentLoan(5426.37, 4.45, [payment1, payment2, payment3, payment4, payment5], 4, 7, True))
+    # studentLoans.append(studentLoan(5426.37, 4.45, [payment1, payment2, payment3, payment4, payment5], 5, 7, False))
+    studentLoans.append(studentLoan(5426.37, 4.45, [payment1, payment2, payment3, payment4, payment5], 5, 7, True))
 
     payment1.setAmount(45.20)
     payment2.setAmount(59.49)
     payment3.setAmount(78.29)
     payment4.setAmount(103.03)
     payment5.setAmount(135.60)
-    # studentLoans.append(studentLoan(7523.55, 4.45, [payment1, payment2, payment3, payment4, payment5], 5, 8, False))
-    studentLoans.append(studentLoan(7523.55, 4.45, [payment1, payment2, payment3, payment4, payment5], 5, 8, True))
+    # studentLoans.append(studentLoan(7523.55, 4.45, [payment1, payment2, payment3, payment4, payment5], 4, 8, False))
+    studentLoans.append(studentLoan(7523.55, 4.45, [payment1, payment2, payment3, payment4, payment5], 4, 8, True))
 
     payment1.setAmount(32.31)
     payment2.setAmount(42.52)
     payment3.setAmount(55.95)
     payment4.setAmount(73.63)
     payment5.setAmount(96.89)
-    # studentLoans.append(studentLoan(5425.03, 4.29, [payment1, payment2, payment3, payment4, payment5], 6, 3, False))
-    studentLoans.append(studentLoan(5425.03, 4.29, [payment1, payment2, payment3, payment4, payment5], 6, 3, True))
+    # studentLoans.append(studentLoan(5425.03, 4.29, [payment1, payment2, payment3, payment4, payment5], 7, 3, False))
+    studentLoans.append(studentLoan(5425.03, 4.29, [payment1, payment2, payment3, payment4, payment5], 7, 3, True))
 
     payment1.setAmount(48.22)
     payment2.setAmount(63.46)
     payment3.setAmount(83.51)
     payment4.setAmount(109.90)
     payment5.setAmount(144.63)
-    # studentLoans.append(studentLoan(8097.05, 4.29, [payment1, payment2, payment3, payment4, payment5], 7, 4, False))
-    studentLoans.append(studentLoan(8097.05, 4.29, [payment1, payment2, payment3, payment4, payment5], 7, 4, True))
+    # studentLoans.append(studentLoan(8097.05, 4.29, [payment1, payment2, payment3, payment4, payment5], 6, 4, False))
+    studentLoans.append(studentLoan(8097.05, 4.29, [payment1, payment2, payment3, payment4, payment5], 6, 4, True))
 
     payment1.setAmount(31.33)
     payment2.setAmount(41.23)
     payment3.setAmount(54.26)
     payment4.setAmount(71.41)
     payment5.setAmount(93.97)
-    # studentLoans.append(studentLoan(5419.29, 3.76, [payment1, payment2, payment3, payment4, payment5], 8, 5, False))
-    studentLoans.append(studentLoan(5419.29, 3.76, [payment1, payment2, payment3, payment4, payment5], 8, 5, True))
+    # studentLoans.append(studentLoan(5419.29, 3.76, [payment1, payment2, payment3, payment4, payment5], 9, 5, False))
+    studentLoans.append(studentLoan(5419.29, 3.76, [payment1, payment2, payment3, payment4, payment5], 9, 5, True))
 
     payment1.setAmount(44.39)
     payment2.setAmount(58.42)
     payment3.setAmount(76.87)
     payment4.setAmount(101.16)
     payment5.setAmount(133.12)
-    # studentLoans.append(studentLoan(7677.75, 3.76, [payment1, payment2, payment3, payment4, payment5], 9, 6, False))
-    studentLoans.append(studentLoan(7677.75, 3.76, [payment1, payment2, payment3, payment4, payment5], 9, 6, True))
+    # studentLoans.append(studentLoan(7677.75, 3.76, [payment1, payment2, payment3, payment4, payment5], 8, 6, False))
+    studentLoans.append(studentLoan(7677.75, 3.76, [payment1, payment2, payment3, payment4, payment5], 8, 6, True))
 
     return studentLoans
 
@@ -365,7 +365,7 @@ def main():
         actualPayment = paymentObligation
 
         if paymentObligation > desiredPayment:
-            print(f'NOTE: payment for {paymentDate.month}/{paymentDate.year} will be higher than the desired payment amount.')
+            print(f'NOTE: payment for {paymentDate.month}/{paymentDate.year} will be higher than the desired payment amount. Obligation: ${paymentObligation:,.2f}')
             extraPayment = 0
         else:
             actualPayment = desiredPayment
