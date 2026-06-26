@@ -50,9 +50,10 @@ class studentLoan:
         self.dateOfLastPayment = startDate - timedelta(days=1)
 
 
-    def resestLoan(self):
+    def resetLoan(self, date):
         self.currentBalance = self.startingBalance
         self.accruedInterest = 0
+        self.setInterestAccrualStartDate(date)
 
 
     def payOffLoan(self, date):
