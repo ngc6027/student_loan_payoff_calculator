@@ -260,7 +260,7 @@ def createStudentLoansList():
 
 def main():
     studentLoans = createStudentLoansList()
-    studentLoans.sort(key=lambda x: (x.interestRate, x.startingBalance), reverse=True)
+    studentLoans.sort(key=lambda x: (x.interestRate, -x.startingBalance), reverse=True)
 
     desiredPayment = 675
 
