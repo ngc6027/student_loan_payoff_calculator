@@ -1,7 +1,7 @@
 import sys
 
 import pandas as pd
-from datetime import datetime
+from datetime import datetime, timedelta
 import calendar
 from dateutil.relativedelta import relativedelta
 
@@ -42,7 +42,13 @@ class studentLoan:
 
         self.accruedInterest = 0
 
+        self.dateOfLastPayment = None
+
         self.payoffDate = None
+
+
+    def setInterestAccrualStartDate(self, startDate):
+        self.dateOfLastPayment = startDate - timedelta(days=1)
 
 
     def resestLoan(self):
@@ -59,12 +65,51 @@ class studentLoan:
         self.stepPayments = stepPayments
 
 
-    def calculateMonthlyInterest(self, date):
-        return self.currentBalance * self.dailyInterestRate * calendar.monthrange(date.year, date.month)[1]
+    def calculateInterestSinceLastPayment(self, date):
+        interest = 0
+
+        # Add special 1% autopay interest rate reduction
+        onePercentAutopayStartDate = datetime(2026, 7, 1)
+        onePercentAutopayEndDate = datetime(2028, 6, 30)
+        specialDailyInterestRate = (self.interestRate - (0.75 / 100)) / 365.25
+
+        if self.enrolledInAutoPay and onePercentAutopayStartDate <= date <= onePercentAutopayEndDate:
+            # Edge case at beginning of range
+            if date - relativedelta(months=1) < onePercentAutopayStartDate:
+                startOfMonth = date.replace(day=1)
+
+                timeAtNormalInterest = startOfMonth - self.dateOfLastPayment
+                interest = self.currentBalance * self.dailyInterestRate * timeAtNormalInterest.days
+
+                timeAtSpecialInterest = date - startOfMonth
+                interest += self.currentBalance * specialDailyInterestRate * timeAtSpecialInterest.days
+
+            # Normal case in the middle of the special interest rate period
+            else:
+                timeSinceLastPayment = date - self.dateOfLastPayment
+                dailyInterestRate = (self.interestRate - (0.75 / 100)) / 365.25
+                interest = self.currentBalance * specialDailyInterestRate * timeSinceLastPayment.days
+
+        # Edge case at end of range
+        elif self.enrolledInAutoPay and onePercentAutopayEndDate < date <= (onePercentAutopayEndDate + relativedelta(months=1)):
+            startOfMonth = date.replace(day=1)
+
+            timeAtSpecialInterest = startOfMonth - self.dateOfLastPayment
+            interest = self.currentBalance * specialDailyInterestRate * timeAtSpecialInterest.days
+
+            timeAtNormalInterest = date - startOfMonth
+            interest += self.currentBalance * self.dailyInterestRate * timeAtNormalInterest.days
+
+        # Standard case
+        else:
+            timeSinceLastPayment = date - self.dateOfLastPayment
+            interest = self.currentBalance * self.dailyInterestRate * timeSinceLastPayment.days
+
+        return interest
 
 
     def applyMonthlyInterest(self, date):
-        monthlyInterest = self.calculateMonthlyInterest(date)
+        monthlyInterest = self.calculateInterestSinceLastPayment(date)
 
         self.currentBalance += monthlyInterest
         self.accruedInterest += monthlyInterest
@@ -92,11 +137,14 @@ class studentLoan:
         paymentAmount, stepPaymentAmount = self.calculateMonthlyPayment(date)
         paymentOverage = stepPaymentAmount - paymentAmount
 
+        # Apply payment and set payoff date if the balance hits 0 as a result of the payment
         if self.currentBalance != 0:
             if paymentAmount >= stepPaymentAmount:
                 self.currentBalance -= paymentAmount
             else:
                 self.payOffLoan(date)
+
+        self.dateOfLastPayment = date
 
         return paymentOverage
 
@@ -117,7 +165,7 @@ class studentLoan:
     def __str__(self):
         printStr = f'Loan Priority: {self.loanPriority}; Aidvantage Loan Number: {self.aidvantageLoanNum}'
         printStr += f'\n\tLoan Starting Balance: ${self.startingBalance:,.2f}'
-        printStr += f'\n\tLoan Current Balance: ${round(self.startingBalance, 2):,.2f}'
+        printStr += f'\n\tLoan Current Balance: ${round(self.currentBalance, 2):,.2f}'
         printStr += f'\n\tInterest Rate: {round(self.interestRate * 100, 2)}%'
         printStr += f'\n\tDaily Interest Rate: {round(self.dailyInterestRate * 100, 5)}%'
         printStr += f'\n\tEnrolled in AutoPay? {self.enrolledInAutoPay}'
@@ -205,34 +253,15 @@ def createStudentLoansList():
     # studentLoans.append(studentLoan(7677.75, 3.76, [payment1, payment2, payment3, payment4, payment5], 6, 8, False))
     studentLoans.append(studentLoan(7677.75, 3.76, [payment1, payment2, payment3, payment4, payment5], 6, 8, True))
 
+    for loan in studentLoans:
+        loan.setInterestAccrualStartDate(datetime(2023, 9, 1))
+
     return studentLoans
 
 
 def main():
     studentLoans = createStudentLoansList()
     studentLoans.sort(key=lambda x: x.loanPriority)
-
-    if debugFlag:
-        for loan in studentLoans:
-            print(loan)
-
-        print('\n')
-
-        for loan in studentLoans:
-            print(f'Starting Balance: ${round(loan.currentBalance, 2):,.2f}; Starting September Interest: ${round(loan.calculateMonthlyInterest(9, 2023), 2):,.2f}')
-
-        print('\n')
-
-        for loan in studentLoans:
-            for payment in loan.stepPayments:
-                print(f'${payment.amount:,.2f}')
-            print()
-
-        print('\n')
-
-    # Apply interest for the month of September 2023, before payments are due
-    for loan in studentLoans:
-        loan.applyMonthlyInterest(datetime(2023, 9, 1))
 
     desiredPayment = 675
 
@@ -241,6 +270,10 @@ def main():
     paymentDates = [paymentDate.replace(day=22) for paymentDate in paymentDates]
 
     for paymentDate in paymentDates:
+        # Apply monthly interest for each loan
+        for loan in studentLoans:
+            loan.applyMonthlyInterest(paymentDate)
+
         paymentObligation = sum((loan.calculateMonthlyPayment(paymentDate)[0] for loan in studentLoans))
 
         if paymentObligation > desiredPayment:
@@ -261,10 +294,6 @@ def main():
                 if paymentApplied == extraPayment:
                     break
 
-        # Apply monthly interest for each loan
-        for loan in studentLoans:
-            loan.applyMonthlyInterest(paymentDate)
-
         today = datetime.today()
         nextPaymentDate = paymentDate + relativedelta(months=1)
         if paymentDate <= today <= nextPaymentDate:
@@ -272,8 +301,13 @@ def main():
             print(f"paymentDate: {paymentDate}")
             print(f"today: {today}")
             print(f"nextPaymentDate: {nextPaymentDate}")
-            return 1
 
+            print()
+
+            for loan in studentLoans:
+                loan.applyMonthlyInterest(today)
+                print(loan)
+                print()
 
     print()
 
