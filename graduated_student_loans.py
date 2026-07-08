@@ -2,7 +2,6 @@ import sys
 
 import pandas as pd
 from datetime import datetime, timedelta
-import calendar
 from dateutil.relativedelta import relativedelta
 
 import copy
@@ -294,24 +293,24 @@ def main():
                 if paymentApplied == extraPayment:
                     break
 
-        # NOTE: Due to calling the applyMonthlyInterest() method, this slightly bungles the final calculation.
-        # We should:
-        #   (a) Figure out how to print better so we don't need to apply the interest, we can just calculate and add it
-        #   (b) make this optional with e.g. a command-line flag
-        today = datetime.today()
-        nextPaymentDate = paymentDate + relativedelta(months=1)
-        if paymentDate <= today <= nextPaymentDate:
-            print("You are here:")
-            print(f"paymentDate: {paymentDate}")
-            print(f"today: {today}")
-            print(f"nextPaymentDate: {nextPaymentDate}")
+        # # NOTE: Due to calling the applyMonthlyInterest() method, this slightly bungles the final calculation.
+        # # We should:
+        # #   (a) Figure out how to print better so we don't need to apply the interest, we can just calculate and add it
+        # #   (b) make this optional with e.g. a command-line flag
+        # today = datetime.today()
+        # nextPaymentDate = paymentDate + relativedelta(months=1)
+        # if paymentDate <= today <= nextPaymentDate:
+        #     print("You are here:")
+        #     print(f"paymentDate: {paymentDate}")
+        #     print(f"today: {today}")
+        #     print(f"nextPaymentDate: {nextPaymentDate}")
 
-            print()
+        #     print()
 
-            for loan in studentLoans:
-                loan.applyMonthlyInterest(today)
-                print(loan)
-                print()
+        #     for loan in studentLoans:
+        #         loan.applyMonthlyInterest(today)
+        #         print(loan)
+        #         print()
 
     print()
 
